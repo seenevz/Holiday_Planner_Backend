@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  city: MyString
+  mood: MyString
+  number_people: 1
+  begin_date: 2019-03-13
+  end_date: 2019-03-13
+  user: one
+
+two:
+  city: MyString
+  mood: MyString
+  number_people: 1
+  begin_date: 2019-03-13
+  end_date: 2019-03-13
+  user: two
