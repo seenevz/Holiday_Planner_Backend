@@ -27,8 +27,11 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
-# gem 'active_model_serializers'
+
+#GraphQl
 gem 'graphql'
+gem 'search_object'
+gem 'search_object_graphql'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

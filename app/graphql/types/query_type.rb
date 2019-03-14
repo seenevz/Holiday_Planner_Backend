@@ -4,10 +4,17 @@ module Types
     # They will be entry points for queries on your schema.
 
     # TODO: remove me
-    field :test_field, String, null: false,
-      description: "An example field added by the generator"
-    def test_field
-      "Hello World!"
+    field :all_users, [UserType], null: false,
+      description: "All users stored"
+    field :user, [UserType], null:false,
+      description: "Return user from id"
+
+    def all_users
+      User.all
+    end
+
+    def user (id)
+      User.find(id)
     end
   end
 end
