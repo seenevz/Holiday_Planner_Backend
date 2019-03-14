@@ -5,7 +5,8 @@ class GraphqlController < ApplicationController
     operation_name = params[:operationName]
     context = {
       # Query context goes here, for example:
-      # current_user: current_user,
+      session: session,
+      current_user: current_user,
     }
     result = HolidayPlannerBackendSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
@@ -16,6 +17,20 @@ class GraphqlController < ApplicationController
 
   private
 
+  def current_user
+
+    return unless session[:token]
+
+    begin
+      decoded_token = JWT.decode(session[:token], secret).first
+    rescue
+      {}
+    end
+    
+    user_id = decoded_token['id']
+
+    User.find_by(id: user_id)
+  end
   # Handle form data, JSON body, or a blank value
   def ensure_hash(ambiguous_param)
     case ambiguous_param
