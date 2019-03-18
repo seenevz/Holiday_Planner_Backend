@@ -4,5 +4,7 @@ module Types
       description: "Add user to database"
     field :signin_user, mutation: Mutations::SignInUser,
       description: "Sign in user"
+    field :create_trip, mutation: Mutations::CreateTrip,
+      description: "Create a trip"
   end
 end

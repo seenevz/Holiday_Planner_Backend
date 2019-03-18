@@ -6,5 +6,6 @@ module Types
       field :last_name, String, null: false
       field :currency, String, null: true
       field :city, String, null: true
+      field :trips, [Types::TripType], null: false
    end
 end

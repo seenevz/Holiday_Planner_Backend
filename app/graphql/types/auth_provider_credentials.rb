@@ -1,5 +1,5 @@
 module Types
-   class AuthProviderEmail < BaseInputObject 
+   class AuthProviderCredentials < BaseInputObject 
      argument :email, String, required: true
      argument :password, String, required: true
    end

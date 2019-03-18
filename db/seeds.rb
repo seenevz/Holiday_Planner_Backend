@@ -5,3 +5,17 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+ trips = []
+ user = User.find(1)
+
+ 10.times do
+   trip = {
+      city: "porto",
+      mood: "test",
+      user: user
+   }
+   trips.push(trip)
+end
+
+Trip.create(trips)
+p 'Created trips'

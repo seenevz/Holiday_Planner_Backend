@@ -4,7 +4,7 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
     context = {
-      # Query context goes here, for example:
+      # Query context goes here, for example:	
       session: session,
       current_user: current_user,
     }
@@ -19,14 +19,15 @@ class GraphqlController < ApplicationController
 
   def current_user
 
-    return unless session[:token]
-
+    token = request.headers[:token]
+    return unless token
     begin
-      decoded_token = JWT.decode(session[:token], secret).first
+      decoded_token = JWT.decode(token, secret).first
     rescue
       {}
     end
     
+    byebug
     user_id = decoded_token['id']
 
     User.find_by(id: user_id)

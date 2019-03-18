@@ -2,7 +2,7 @@ module Mutations
    class CreateUser < Mutations::BaseMutation
 
       class AuthProviderSignupData < Types::BaseInputObject
-         argument :credentials, Types::AuthProviderEmail, required: false
+         argument :credentials, Types::AuthProviderCredentials, required: false
        end
 
       argument :first_name, String, required: true
@@ -15,8 +15,8 @@ module Mutations
          User.create!(
             first_name: first_name,
             last_name: last_name,
-            email: auth_provider&.[](:email)&.[](:email),
-            password: auth_provider&.[](:email)&.[](:password),
+            email: auth_provider[:credentials][:email],
+            password: auth_provider[:credentials][:password],
          )
       end
 
