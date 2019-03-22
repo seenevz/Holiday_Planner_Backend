@@ -27,7 +27,6 @@ class GraphqlController < ApplicationController
       {}
     end
     
-    byebug
     user_id = decoded_token['id']
 
     User.find_by(id: user_id)

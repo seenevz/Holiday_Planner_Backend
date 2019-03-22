@@ -1,5 +1,3 @@
-# account = 'YHLCM4NM'
-# key = '38erzyxay2eh4ieiwg0wx0xpuyi5yhah'
 require 'rest-client'
 
 class API
@@ -10,11 +8,8 @@ class API
          'X-Triposo-Account': ENV['API_USER'],
          'X-Triposo-Token': ENV['API_KEY']
       }
-
-      response = RestClient.get(
-         url,
-         headers
-      )
+      # byebug
+      response = RestClient.get(url, headers)
       
       [response.code, JSON.parse(response.body)]
    end
