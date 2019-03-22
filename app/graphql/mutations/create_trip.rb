@@ -11,20 +11,14 @@ module Mutations
 
       # field :trip, Types::TripType, null: false
 
-      def resolve(
-         city,
-         mood,
-         number_people,
-         begin_date,
-         end_date
-      )
+      def resolve(city: nil, mood: nil, number_people: nil, begin_date: nil, end_date: nil)
          Trip.create!(
             city: city,
             mood: mood,
             number_people: number_people,
             begin_date: begin_date,
             end_date: end_date,
-            user: context[:current_user]  
+            user: context[:current_user]
          )
       end
    end
