@@ -14,6 +14,9 @@ module Types
     field :city, [CityType], null:false do 
       argument :term, String, required:true
     end
+    field :tags, [TagType], null:false do
+      argument :city, String, required:true
+    end
 
     def all_user_trips
       user = User.find_by(id: context[:current_user])
@@ -41,5 +44,26 @@ module Types
     
     resp[1]['results']
     end
+
+    def tags(city:null)
+    endpoint = 'tag'
+    offset = 0
+    query = "location_id=#{city}&order_by=-score&count=100&offset=#{offset}"
+    final_resp = []
+    resp = API.get_request(endpoint, query)
+    final_resp.push(resp[1]['results'])
+    until !resp[1]['more']
+      offset = offset + 100
+      query = "location_id=#{city}&order_by=-score&count=100&offset=#{offset}"
+
+      resp = API.get_request(endpoint, query)
+      final_resp.push(resp[1]['results'])
+      byebug
+      p 'eol'
+    end 
+
+    final_resp.flatten
+    end
+
   end
 end
