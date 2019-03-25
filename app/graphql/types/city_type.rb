@@ -6,6 +6,7 @@ module Types
       field :trigram, String, null: true
       field :parent_id, String, null: true
       field :score, String, null: true
-      field :country_id, String, null:true
+      field :country_id, String, null: true
+      field :images, [ImageType], null: true
    end
 end

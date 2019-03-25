@@ -35,7 +35,7 @@ module Types
 
     def city(term:null)
     endpoint = 'location'
-    query = "tag_labels=city&annotate=trigram:#{term}&trigram=>=0.4&count=10&fields=id,name,score,country_id,parent_id,snippet&order_by=-trigram"
+    query = "tag_labels=city&annotate=trigram:#{term}&trigram=>=0.4&count=10&fields=id,name,score,country_id,parent_id,snippet,images&order_by=-trigram"
 
     resp = API.get_request(endpoint, query)
     
