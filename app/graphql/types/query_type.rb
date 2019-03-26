@@ -6,14 +6,19 @@ module Types
     # TODO: remove me
     field :all_user_trips, [TripType], null: false,
       description: "All trips from user"
+
     field :user, [UserType], null:false,
       description: "Return user from id"
+
     field :places, [PlaceType], null:false do
       argument :city, String, required: true
+      argument :tags, [String], required: true
     end
+
     field :city, [CityType], null:false do 
       argument :term, String, required:true
     end
+
     field :tags, [TagType], null:false do
       argument :city, String, required:true
     end
@@ -28,12 +33,25 @@ module Types
       user
     end
 
-    def places(city:null)
+    def places(city:null, tags:null)
     endpoint = 'poi'
-    query = "trigram=>=0.3&location_id=#{city}&count=10&fields=id,name,score,snippet,location_id,tag_labels&order_by=-score"
+    tags_array = parse_tags(tags)
+    offset = 0
+    final_resp = []
+    query = "location_id=#{city}&count=100&fields=id,name,score,snippet,location_id,coordinates,images,intro&fields=all&order_by=-score#{tags_array}"
 
     resp = API.get_request(endpoint, query)
-    resp[1]['results']
+    final_resp.push(resp[1]['results'])
+
+    until !resp[1]['more']
+      offset = offset + 100
+      query = "location_id=#{city}&count=100&fields=id,name,score,snippet,location_id,coordinates,images,intro&fields=all&order_by=-score#{tags_array}&offset=#{offset}"
+
+      resp = API.get_request(endpoint, query)
+      final_resp.push(resp[1]['results'])
+    end 
+    
+    final_resp.flatten
     end
 
     def city(term:null)
@@ -58,12 +76,18 @@ module Types
 
       resp = API.get_request(endpoint, query)
       final_resp.push(resp[1]['results'])
-      byebug
-      p 'eol'
     end 
-
     final_resp.flatten
     end
 
+    private
+
+    def parse_tags(tags_array)
+      tags = []
+
+      tags_array.map{|tag| tags.push("&tag_labels=#{tag}")}
+
+      tags.join
+    end
   end
 end
