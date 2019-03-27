@@ -6,5 +6,6 @@ module Types
       field :number_people, Integer, null: true
       field :begin_date, String, null: true
       field :end_date, String, null: true
+      field :places, [Types::PlaceType], null: true
    end
 end

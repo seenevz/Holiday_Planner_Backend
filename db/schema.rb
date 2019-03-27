@@ -37,18 +37,18 @@ ActiveRecord::Schema.define(version: 2019_03_13_173637) do
     t.integer "city_id"
     t.string "name"
     t.string "image"
-    t.bigint "day_id"
+    t.bigint "trip_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["day_id"], name: "index_places_on_day_id"
+    t.index ["trip_id"], name: "index_places_on_trip_id"
   end
 
   create_table "trips", force: :cascade do |t|
-    t.string "city"
+    t.string "title"
     t.string "mood"
-    t.integer "number_people"
-    t.date "begin_date"
-    t.date "end_date"
+    t.string "number_people"
+    t.string "begin_date"
+    t.string "end_date"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -68,6 +68,6 @@ ActiveRecord::Schema.define(version: 2019_03_13_173637) do
 
   add_foreign_key "categories", "places"
   add_foreign_key "days", "trips"
-  add_foreign_key "places", "days"
+  add_foreign_key "places", "trips"
   add_foreign_key "trips", "users"
 end

@@ -5,7 +5,7 @@ class CreatePlaces < ActiveRecord::Migration[5.2]
       t.integer :city_id
       t.string :name
       t.string :image
-      t.references :day, foreign_key: true
+      t.references :trip, foreign_key: true
 
       t.timestamps
     end

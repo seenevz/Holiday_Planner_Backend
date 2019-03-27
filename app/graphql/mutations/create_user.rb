@@ -4,7 +4,7 @@ module Mutations
       class AuthProviderSignupData < Types::BaseInputObject
          argument :credentials, Types::AuthProviderCredentials, required: false
        end
-
+ 
       argument :first_name, String, required: true
       argument :last_name, String, required: true
       argument :currency, String, required: false

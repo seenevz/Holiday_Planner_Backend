@@ -1,25 +1,38 @@
 module Mutations
    class CreateTrip < BaseMutation
       
-      argument :city, String, required: true
-      argument :mood, String, required: true
-      argument :number_people, Integer, required: true
-      argument :begin_date, String, required: true
-      argument :end_date, String, required: true
+      
+      class PlaceAttributes < Types::BaseInputObject
+         argument :place_id, String, required: true
+         argument :name, String, required: true
+      end
 
+      class TripAttributes < Types::BaseInputObject
+         argument :title, String, required: true
+         argument :mood, String, required: true
+         argument :number_people, Integer, required: true
+         argument :begin_date, String, required: true
+         argument :end_date, String, required: true
+         argument :places, [PlaceAttributes], required: false
+      end
+
+
+      argument :fields, TripAttributes, required: true
       type Types::TripType
 
-      # field :trip, Types::TripType, null: false
 
-      def resolve(city: nil, mood: nil, number_people: nil, begin_date: nil, end_date: nil)
-         Trip.create!(
-            city: city,
-            mood: mood,
-            number_people: number_people,
-            begin_date: begin_date,
-            end_date: end_date,
-            user: context[:current_user]
-         )
+      def resolve(fields:null)
+         user = context[:current_user]
+         trip = user.trips.build(title:fields.title, mood:fields.mood, number_people:fields.number_people, begin_date: fields.begin_date, end_date: fields.end_date)
+         if trip.save
+            places = []
+            fields.places.map{|place| places.push({place_id: place.place_id, name: place.name, trip_id:trip.id})}
+            byebug
+            Place.create!(places)
+         else
+            {errors: trip.errors.full_messages}
+         end
+         trip
       end
    end
 end

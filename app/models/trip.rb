@@ -1,4 +1,4 @@
 class Trip < ApplicationRecord
   belongs_to :user
-  has_many :days
+  has_many :places
 end

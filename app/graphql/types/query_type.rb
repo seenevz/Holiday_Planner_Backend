@@ -23,6 +23,15 @@ module Types
       argument :city, String, required:true
     end
 
+    field :trip, TripType, null:false do
+      argument :trip_id, String, null:false
+    end
+
+    def trip(id)
+      selected_trip = Trip.find_by(id: id)
+      
+    end
+
     def all_user_trips
       user = User.find_by(id: context[:current_user])
       user.trips
@@ -60,7 +69,9 @@ module Types
 
     resp = API.get_request(endpoint, query)
     
-    resp[1]['results']
+    flatten_results = resp[1]['results'].map{|result| flatten_hash(result)}
+    byebug
+    flatten_results
     end
 
     def tags(city:null)
@@ -88,6 +99,18 @@ module Types
       tags_array.map{|tag| tags.push("&tag_labels=#{tag}")}
 
       tags.join
+    end
+
+    def flatten_hash(hash)
+      hash.each_with_object({}) do |(k, v), h|
+        if v.is_a? Hash
+          flatten_hash(v).map do |h_k, h_v|
+            h["#{k}.#{h_k}".to_sym] = h_v
+          end
+        else 
+          h[k] = v
+        end
+       end
     end
   end
 end
