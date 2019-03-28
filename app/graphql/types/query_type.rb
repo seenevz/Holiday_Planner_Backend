@@ -24,12 +24,25 @@ module Types
     end
 
     field :trip, TripType, null:false do
-      argument :trip_id, String, null:false
+      argument :trip_id, String, required: true
     end
 
     def trip(id)
-      selected_trip = Trip.find_by(id: id)
-      
+      selected_trip = Trip.find_by(id: id[:trip_id])
+      places = selected_trip.places
+      places_results = []
+
+      places.map{|place| places_results.push(run_query(place.place_id)) }
+
+      {
+        id: selected_trip.id,
+        title: selected_trip.title,
+        mood: selected_trip.mood,
+        number_people: selected_trip.number_people,
+        begin_date: selected_trip.begin_date,
+        end_date: selected_trip.end_date,
+        places: places_results,
+      }
     end
 
     def all_user_trips
@@ -99,6 +112,12 @@ module Types
       tags_array.map{|tag| tags.push("&tag_labels=#{tag}")}
 
       tags.join
+    end
+
+    def run_query(id)
+      endpoint = 'poi'
+      query = "id=#{id}"
+      API.get_request(endpoint, query)
     end
 
     def flatten_hash(hash)
