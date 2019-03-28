@@ -6,5 +6,6 @@ module Types
       description: "Sign in user"
     field :create_trip, mutation: Mutations::CreateTrip,
       description: "Create a trip"
+    field :create_place, mutation: Mutations::CreatePlace
   end
 end

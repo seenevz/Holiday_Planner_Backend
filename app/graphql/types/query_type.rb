@@ -83,7 +83,7 @@ module Types
     resp = API.get_request(endpoint, query)
     
     flatten_results = resp[1]['results'].map{|result| flatten_hash(result)}
-    byebug
+
     flatten_results
     end
 
@@ -116,8 +116,9 @@ module Types
 
     def run_query(id)
       endpoint = 'poi'
-      query = "id=#{id}"
-      API.get_request(endpoint, query)
+      query = "fields=id,name,score,snippet,location_id,coordinates,images,intro&id=#{id}"
+      resp = API.get_request(endpoint, query)
+      resp[1]['results']
     end
 
     def flatten_hash(hash)
