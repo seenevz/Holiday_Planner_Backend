@@ -14,7 +14,6 @@ module Mutations
          
          return unless user
          return unless user.authenticate(credentials[:password])
-         byebug
          token = issue_token({id: user.id})
          context[:session][:authorization] = token
          { user: user, token: token }

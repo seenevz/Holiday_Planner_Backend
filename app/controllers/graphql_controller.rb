@@ -21,7 +21,6 @@ class GraphqlController < ApplicationController
 
     token = request.headers[:authorization]
 
-    byebug
     return unless token
     begin
       decoded_token = JWT.decode(token, secret).first

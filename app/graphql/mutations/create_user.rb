@@ -24,7 +24,7 @@ module Mutations
          
          token = issue_token({id: user.id})
          context[:session][:authorization] = token
-         byebug
+
          { user: user, token: token }
       end
    end
