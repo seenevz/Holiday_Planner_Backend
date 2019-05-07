@@ -23,13 +23,13 @@ module Mutations
 
       def resolve(fields:null)
          user = context[:current_user]
-
+         byebug
          trip = user.trips.build(title:fields.title, mood:fields.mood, number_people:fields.number_people, begin_date: fields.begin_date, end_date: fields.end_date)
          begin 
             trip.save
-            places = []
-            fields.places.map{|place| places.push({place_id: place.place_id, name: place.name, trip_id:trip.id})}
-            create_places = Place.create!(places)
+            # places = []
+            # fields.places.map{|place| places.push({place_id: place.place_id, name: place.name, trip_id:trip.id})}
+            # create_places = Place.create!(places)
          rescue
          end
          trip

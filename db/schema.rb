@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(version: 2019_03_13_173637) do
   end
 
   create_table "places", force: :cascade do |t|
-    t.integer "place_id"
-    t.integer "city_id"
+    t.string "place_id"
+    t.string "city_id"
     t.string "name"
     t.string "image"
     t.bigint "trip_id"

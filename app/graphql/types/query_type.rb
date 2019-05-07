@@ -31,8 +31,8 @@ module Types
       selected_trip = Trip.find_by(id: id[:trip_id])
       places = selected_trip.places
       places_results = []
-
-      places.map{|place| places_results.push(run_query(place.place_id)) }
+      places.map{|place|
+         places_results.push(run_query(place.place_id)) }
 
       {
         id: selected_trip.id,

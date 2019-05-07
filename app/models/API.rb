@@ -8,7 +8,6 @@ class API
          'X-Triposo-Account': ENV['API_USER'],
          'X-Triposo-Token': ENV['API_KEY']
       }
-      # byebug
       response = RestClient.get(url, headers)
       
       [response.code, JSON.parse(response.body)]
